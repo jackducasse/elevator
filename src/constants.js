@@ -1,0 +1,1 @@
+export const FLOORS = process.env.REACT_APP_FLOORS
