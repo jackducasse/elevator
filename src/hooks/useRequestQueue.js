@@ -72,6 +72,13 @@ export const useRequestQueue = ({
             console.log('current request has been cleared');
             // 
         } else {
+            if(position.floor === current.floor){
+                console.log('reached requested floor');
+                setIsActive(false);
+                onReachFloor();
+                completeRequest();
+                return;
+            } 
             setIsActive(true);
             setTimeout(() => onPassFloor(position.floor + (position.direction)), 2000); //TODO: const
         }
@@ -87,9 +94,9 @@ export const useRequestQueue = ({
             setIsActive(false);
             onReachFloor();
             completeRequest();
-        } else {
-            setTimeout(() => onPassFloor(position.floor + (position.direction)), 2000); //TODO: const
-        }
+            return;
+        } 
+        setTimeout(() => onPassFloor(position.floor + (position.direction)), 2000); //TODO: const
     }, [
         position.floor,
     ]);
