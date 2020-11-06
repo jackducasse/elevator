@@ -5,6 +5,7 @@ import orderRequests from '../utils/orderRequests';
 
 export const useRequestQueue = ({
     onReachFloor,
+    isDisabled,
 } = {}) => {
     const [{
         backlog,
@@ -54,41 +55,7 @@ export const useRequestQueue = ({
         current: {},
     }));
 
-    const [isActive, setIsActive] = React.useState(false);
-
-    React.useEffect(() => {
-        console.log('backlog length changed', backlog.length);
-        // Ignore if nothing in backlog, or if a request is already in progress
-        if(!backlog.length) return;
-        startNewRequest();
-    }, [
-        // If item added to backlog
-        backlog.length,
-    ])
-
-    React.useEffect(() => {
-        console.log('current request changed', current);
-        if(!current.id) {
-            console.log('current request has been cleared');
-            // 
-        } else {
-            if(position.floor === current.floor){
-                console.log('reached requested floor');
-                setIsActive(false);
-                onReachFloor();
-                completeRequest();
-                return;
-            } 
-            setIsActive(true);
-            setTimeout(() => onPassFloor(position.floor + (position.direction)), 2000); //TODO: const
-        }
-    }, [
-        get(current, 'id'),
-    ]);
-
-    React.useEffect(() => {
-        console.log('position changed', position);
-        if(!isActive) return;
+    const processMovement = () => {
         if(position.floor === current.floor){
             console.log('reached requested floor');
             setIsActive(false);
@@ -96,13 +63,43 @@ export const useRequestQueue = ({
             completeRequest();
             return;
         } 
+        setIsActive(true);
         setTimeout(() => onPassFloor(position.floor + (position.direction)), 2000); //TODO: const
+    }
+
+    const [isActive, setIsActive] = React.useState(false);
+
+    React.useEffect(() => {
+        console.log('backlog length changed', backlog.length, isDisabled);
+        // Ignore if nothing in backlog, or if elevator movement is disabled (i.e. doors are still open..)
+        if(!backlog.length || isDisabled) return;
+        startNewRequest();
+    }, [
+        // If item added to backlog
+        backlog.length,
+        // Or if disabled status changes (i.e. doors close..)
+        isDisabled,
+    ])
+
+    React.useEffect(() => {
+        console.log('current request changed', current);
+        if(!current.id) return;
+        processMovement();
+    }, [
+        get(current, 'id'),
+    ]);
+
+    React.useEffect(() => {
+        console.log('position changed', position);
+        if(!isActive) return;
+        processMovement();
     }, [
         position.floor,
     ]);
 
     return {
         addToBacklog,
+        backlog,
         currentRequest: current,
         position,
     }

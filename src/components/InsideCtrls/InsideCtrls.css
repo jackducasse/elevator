@@ -1,0 +1,21 @@
+.InsideCtrls{
+    
+}
+.InsideCtrls .row{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 180px;
+}
+.InsideCtrls button{
+    margin: 5px;
+    padding: 8px 4px;
+    width: 50px;
+    background: white;
+    border: 1px solid #333;
+}
+.InsideCtrls button.active{
+    color: white;
+    background: orange;
+}

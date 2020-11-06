@@ -3,13 +3,38 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FLOORS } from '../../constants';
 
+import './OutsideCtrls.css';
+
 export const OutsideCtrls = ({
     floor,
+    isUpActive,
+    isDownActive,
     onCallElevator,
 }) => (
     <div className="OutsideCtrls">
-        {floor !== FLOORS - 1 && (<button onClick={partial(onCallElevator, {floor, direction: 1})}>Up</button>)}
-        {floor !== 0 && (<button onClick={partial(onCallElevator, {floor, direction: -1})}>Down</button>)}
+        <div className="container">
+            <div className="floorNo">
+                {floor || 'G'}
+            </div>
+            <div className="buttons">
+                {floor !== FLOORS - 1 && (
+                    <button
+                        className={isUpActive ? 'active' : ''}
+                        onClick={partial(onCallElevator, {floor, direction: 1})}
+                    >
+                        Up
+                    </button>
+                )}
+                {floor !== 0 && (
+                    <button
+                        className={isDownActive ? 'active' : ''}
+                        onClick={partial(onCallElevator, {floor, direction: -1})}
+                    >
+                        Down
+                    </button>
+                )}
+            </div>
+        </div>
     </div>
 );
 // OutsideCtrls.propTypes = {

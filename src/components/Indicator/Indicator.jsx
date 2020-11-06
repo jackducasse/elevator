@@ -3,9 +3,9 @@ import React from 'react';
 import './Indicator.css';
 
 const directionMap = {
-    1: 'Up',
+    1: 'up',
     0: '',
-    [-1]: 'Down',
+    [-1]: 'down',
 };
 
 export const Indicator = ({
@@ -13,7 +13,14 @@ export const Indicator = ({
     direction,
 }) => (
     <div className="Indicator">
-        <span>{floor}</span>&nbsp;
-        <span>{directionMap[direction]}</span>
+        <div className="container">
+            <div className="floorNo">{floor || 'G'}</div>
+            <div 
+                className={[
+                    'direction',
+                    directionMap[direction],
+                ].join(' ')}
+            />
+        </div>
     </div>
 )

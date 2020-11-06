@@ -1,0 +1,26 @@
+.OutsideCtrls{
+
+}
+.OutsideCtrls .container{
+    display: flex;
+}
+.OutsideCtrls .floorNo{
+    display: flex;
+    align-items: center;
+    padding-right: 16px;
+    font-size: 24px;
+}
+.OutsideCtrls .buttons{
+    display: flex;
+    flex-direction: column;
+}
+.OutsideCtrls button{
+    padding: 8px;
+    width: 50px;
+    background: white;
+    border: 1px solid #333;
+}
+.OutsideCtrls button.active{
+    color: white;
+    background: orange;
+}
