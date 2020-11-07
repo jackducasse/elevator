@@ -8,7 +8,7 @@
 Number of floors can be edited via the `.envrc` file and reloading env variables.
 
 ## Known issues
-- Doors can open while moving :#
+- Doors can be opened from 'inside' while moving :#
 - Ugly
 - Unoptimized
 
