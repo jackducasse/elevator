@@ -1,13 +1,14 @@
 .Indicator{
     font-size: 32px;
-    padding: 64px;
+    padding: 8px;
 }
 .Indicator .container{
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 .Indicator .floorNo{
-    padding: 0 16px;
+    padding-right: 16px;
 }
 .Indicator .direction{
 }

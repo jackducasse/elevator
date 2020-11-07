@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './Indicator.css';
+import types from '../../utils/types';
 
 const directionMap = {
     1: 'up',
@@ -23,4 +24,10 @@ export const Indicator = ({
             />
         </div>
     </div>
-)
+);
+Indicator.propTypes = {
+    floor: types.request.floor,
+    direction: types.request.direction,
+};
+Indicator.defaultProps = {
+};

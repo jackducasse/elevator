@@ -12,6 +12,9 @@ export const useRequestQueue = ({
         current,
         position,
     }, setQueue] = React.useState({ backlog: [], current: {}, position: { floor: 0 } });
+
+    const [isActive, setIsActive] = React.useState(false);
+
     const addToBacklog = (request) => {
         const id = uniqueId();
         setQueue(({
@@ -24,6 +27,7 @@ export const useRequestQueue = ({
             position: currPosition,
         }));
     };
+
     const startNewRequest = () => setQueue(({
         backlog: currBacklog,
         current: currCurrent,
@@ -38,6 +42,7 @@ export const useRequestQueue = ({
             position: nextPosition,
         };
     });
+
     const onPassFloor = (floor) => setQueue(({
         position: currPosition,
         ...rest
@@ -45,6 +50,7 @@ export const useRequestQueue = ({
         ...rest,
         position: {...currPosition, floor},
     }));
+
     const completeRequest = () => setQueue(({
         backlog: currBacklog,
         current: currCurrent,
@@ -64,13 +70,11 @@ export const useRequestQueue = ({
             return;
         } 
         setIsActive(true);
-        setTimeout(() => onPassFloor(position.floor + (position.direction)), 2000); //TODO: const
+        setTimeout(() => onPassFloor(position.floor + (position.direction)), 2000);
     }
 
-    const [isActive, setIsActive] = React.useState(false);
 
     React.useEffect(() => {
-        console.log('backlog length changed', backlog.length, isDisabled);
         // Ignore if nothing in backlog, or if elevator movement is disabled (i.e. doors are still open..)
         if(!backlog.length || isDisabled) return;
         startNewRequest();
@@ -82,20 +86,23 @@ export const useRequestQueue = ({
     ])
 
     React.useEffect(() => {
-        console.log('current request changed', current);
+        // Ignore if current request has been cleared..
         if(!current.id) return;
         processMovement();
     }, [
+        // If current request has changed
         get(current, 'id'),
     ]);
 
     React.useEffect(() => {
-        console.log('position changed', position);
+        // Ignore if not in motion..
         if(!isActive) return;
         processMovement();
     }, [
+        // If moved to new floor
         position.floor,
     ]);
+
 
     return {
         addToBacklog,

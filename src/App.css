@@ -1,12 +1,47 @@
 .App{
-  
+  background: white;
 }
 
-.container{
+button{
+  width: 50px;
+  height: 50px;
+  background: white;
+  border: 1px solid #333;
+  border-radius: 8px;
+}
+button:hover{
+  cursor: pointer;
+  background: rgba(255, 127, 80, 0.25);
+}
+button.active{
+  color: white;
+  background: coral;
+}
+
+.App > .container{
+  margin: 0 -64px;
+}
+.App > .container .section{
+  padding: 0 64px;
+}
+
+.App > .container .outsideCtrls{
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
-
 .floor{
-  padding: 16px;
-  border-bottom: 1px solid #ccc;
+  padding: 32px;
+}
+.App > .container .main{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 64px;
+}
+.App > .container .main .elevator{
+  padding: 0 64px;
+}
+.App > .container .main .insideCtrls{
 }

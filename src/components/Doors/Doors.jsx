@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './Doors.css';
 
@@ -13,4 +14,9 @@ export const Doors = ({
             </div>
         </div>
     </div>
-)
+);
+Doors.propTypes = {
+    open: PropTypes.bool,
+};
+Doors.defaultProps = {
+};

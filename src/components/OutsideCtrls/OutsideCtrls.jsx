@@ -1,11 +1,37 @@
-import { partial } from 'lodash';
+import { find, partial, times } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FLOORS } from '../../constants';
 
 import './OutsideCtrls.css';
+import types from '../../utils/types';
 
 export const OutsideCtrls = ({
+    backlog,
+    addToBacklog,
+}) => times(FLOORS, (floor) => {
+    const upActive = find(backlog, {floor, direction: 1});
+    const downActive = find(backlog, {floor, direction: -1});
+    return (
+        <div key={floor} className="floor">
+            <OutsideCtrl
+                floor={floor}
+                isUpActive={!!upActive}
+                isDownActive={!!downActive}
+                onCallElevator={addToBacklog}
+            />
+        </div>
+    )
+});
+OutsideCtrls.propTypes = {
+    backlog: PropTypes.arrayOf(PropTypes.shape(types.request)),
+    addToBacklog: PropTypes.func.isRequired,
+};
+OutsideCtrls.defaultProps = {
+    backlog: [],
+};
+
+export const OutsideCtrl = ({
     floor,
     isUpActive,
     isDownActive,
@@ -22,7 +48,7 @@ export const OutsideCtrls = ({
                         className={isUpActive ? 'active' : ''}
                         onClick={partial(onCallElevator, {floor, direction: 1})}
                     >
-                        Up
+                        ▲
                     </button>
                 )}
                 {floor !== 0 && (
@@ -30,14 +56,18 @@ export const OutsideCtrls = ({
                         className={isDownActive ? 'active' : ''}
                         onClick={partial(onCallElevator, {floor, direction: -1})}
                     >
-                        Down
+                        ▼
                     </button>
                 )}
             </div>
         </div>
     </div>
 );
-// OutsideCtrls.propTypes = {
-//     floor: PropTypes.number.isRequired,
-//     onCallElevator: PropTypes.func.isRequired,
-// };
+OutsideCtrl.propTypes = {
+    floor: types.request.floor,
+    isUpActive: PropTypes.bool,
+    isDownActive: PropTypes.bool,
+    onCallElevator: PropTypes.func.isRequired,
+};
+OutsideCtrl.defaultProps = {
+};

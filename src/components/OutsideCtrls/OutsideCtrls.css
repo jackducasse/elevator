@@ -7,7 +7,8 @@
 .OutsideCtrls .floorNo{
     display: flex;
     align-items: center;
-    padding-right: 16px;
+    padding-right: 8px;
+    width: 24px;
     font-size: 24px;
 }
 .OutsideCtrls .buttons{
@@ -15,12 +16,7 @@
     flex-direction: column;
 }
 .OutsideCtrls button{
-    padding: 8px;
-    width: 50px;
-    background: white;
-    border: 1px solid #333;
+    margin: 4px 0;
 }
 .OutsideCtrls button.active{
-    color: white;
-    background: orange;
 }
